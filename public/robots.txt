@@ -1,0 +1,3 @@
+# Internal staff panel. Nothing here is for crawlers.
+User-agent: *
+Disallow: /
