@@ -10,6 +10,10 @@ const ovar = (name: string, fallback = ''): string => process.env[name] ?? fallb
 
 const IS_DEV = process.env.NODE_ENV !== 'production';
 
+/** Without SES credentials we print the PIN to the server log instead of mailing it. */
+export const hasSesCredentials =
+  !!ovar('AWS_SES_ACCESS_KEY_ID') && !!ovar('AWS_SES_SECRET_ACCESS_KEY');
+
 /** Emails allowed to sign in. Everything else is rejected before a PIN is ever generated. */
 const STAFF_EMAILS = ovar('STAFF_EMAILS', 'nikos@pandectes.io,panos@pandectes.io')
   .split(',')
@@ -42,14 +46,12 @@ export const config = {
       accessKeyId: ovar('AWS_SES_ACCESS_KEY_ID'),
       secretAccessKey: ovar('AWS_SES_SECRET_ACCESS_KEY'),
     },
-    region: ovar('AWS_SES_REGION', 'eu-central-1'),
+    // No default: a wrong region fails at send time with a confusing error, so demand it up
+    // front once we know we are actually going to mail.
+    region: hasSesCredentials ? gvar('AWS_SES_REGION') : '',
     apiVersion: '2010-12-01',
   },
   email: {
     noReply: ovar('EMAIL_NO_REPLY', 'no-reply@pandectes.io'),
   },
 };
-
-/** Without SES credentials we print the PIN to the server log instead of mailing it. */
-export const hasSesCredentials =
-  !!config.ses.credentials.accessKeyId && !!config.ses.credentials.secretAccessKey;
