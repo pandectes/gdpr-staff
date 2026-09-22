@@ -182,7 +182,7 @@ export default function Login({ loaderData, actionData }: Route.ComponentProps) 
                       autoComplete="email"
                       required
                       autoFocus
-                      placeholder="you@pandectes.io"
+                      placeholder="Your email"
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={busy}>
