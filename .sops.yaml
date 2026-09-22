@@ -1,0 +1,3 @@
+creation_rules:
+  - kms: "arn:aws:kms:eu-central-1:273728041975:key/fd1fe885-5cd2-4756-ae6b-2844265f3510,arn:aws:kms:us-east-1:273728041975:key/e0412463-5903-406c-a62e-f572b9389885"
+    aws_profile: sops
