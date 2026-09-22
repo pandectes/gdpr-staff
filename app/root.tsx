@@ -10,6 +10,8 @@ import type { Route } from './+types/root';
 import './app.css';
 
 export const links: Route.LinksFunction = () => [
+  // Declared so the browser stops asking for /favicon.ico, which has no route and logs an error.
+  { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'anonymous' },
   {
